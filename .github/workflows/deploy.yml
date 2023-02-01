@@ -1,0 +1,28 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.3.0
+      - name: setup node
+        uses: actions/setup-node@v3.6.0
+      - name: install dependencies
+        run: npm install
+      - name: build static files
+        run: npm run build
+      - name: deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
