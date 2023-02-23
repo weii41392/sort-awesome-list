@@ -15,7 +15,7 @@ import Client from '../lib';
 const client = new Client();
 
 function Main() {
-  const { token: authToken, doSignIn, doSignOut } = useAuth();
+  const { token: authToken, isAuthenticated, doSignIn, doSignOut } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
 
   const [repoLink, setRepoLink] = React.useState('');
@@ -24,7 +24,7 @@ function Main() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleLoginLogout = () => {
-    if (authToken) {
+    if (isAuthenticated()) {
       doSignOut().then(() => {
         enqueueSnackbar('Logged out successfully.', { variant: 'success' });
       });
@@ -77,7 +77,10 @@ function Main() {
   return (
     <>
       {isLoading && <Loading />}
-      <Navbar isAuthenticated={!!authToken} onLoginLogout={handleLoginLogout} />
+      <Navbar
+        isAuthenticated={isAuthenticated()}
+        onLoginLogout={handleLoginLogout}
+      />
       <Box component="main" m={2}>
         <Toolbar />
         <Box my={2}>
