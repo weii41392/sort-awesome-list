@@ -12,6 +12,25 @@ function getOptions(token) {
   return null;
 }
 
+export async function validateToken(token) {
+  try {
+    const url = 'https://api.github.com/user';
+    const response = await fetch(url, getOptions(token));
+    if (!response.ok) {
+      throw response;
+    }
+    return true;
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(error);
+    }
+    if (error.status === 401) {
+      return false;
+    }
+    throw new Error('Failed to validate token.');
+  }
+}
+
 export async function fetchReadme(owner, repo, token) {
   try {
     const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
