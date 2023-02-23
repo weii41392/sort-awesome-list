@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
 
-function SearchBar({ value, onValueChange, onImport, onSort }) {
+function SearchBar({ value, onValueChange, onImport }) {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
       <Paper
@@ -31,13 +31,6 @@ function SearchBar({ value, onValueChange, onImport, onSort }) {
       >
         Import
       </Button>
-      <Button
-        variant="contained"
-        onClick={onSort}
-        sx={{ borderRadius: 3, height: 35, width: 80 }}
-      >
-        Sort
-      </Button>
     </Box>
   );
 }
@@ -45,8 +38,7 @@ function SearchBar({ value, onValueChange, onImport, onSort }) {
 SearchBar.propTypes = {
   value: PropTypes.string.isRequired,
   onValueChange: PropTypes.func.isRequired,
-  onImport: PropTypes.func.isRequired,
-  onSort: PropTypes.func.isRequired
+  onImport: PropTypes.func.isRequired
 };
 
 export default SearchBar;

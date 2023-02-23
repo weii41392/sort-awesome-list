@@ -1,6 +1,6 @@
 import { mergeObject, filterFalsy } from './utils';
 
-const defaults = {
+export const defaults = {
   token: null,
   urlPatterns: {
     githubRepo: true,
@@ -9,7 +9,13 @@ const defaults = {
   }
 };
 
-export default function makeConfigs(configs) {
+export const labels = {
+  githubRepo: 'GitHub repository',
+  githubRepoPage: 'GitHub page',
+  githubRepoIncludeSub: 'GitHub repository subpages'
+};
+
+export function makeConfigs(configs) {
   let innerConfigs = { ...defaults };
   if (configs) {
     innerConfigs = mergeObject(innerConfigs, configs);

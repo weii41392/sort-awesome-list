@@ -6,13 +6,19 @@ import Grid from '@mui/material/Grid';
 import Loading from './Loading';
 import Navbar from './Navbar';
 import SearchBar from './SearchBar';
+import SortOptions from './SortOptions';
 import EditorPreview from './EditorPreview';
 import Copyright from './Copyright';
 import { useAuth } from './AuthProvider';
 import { initialInput, initialOutput } from '../lib/constants';
 import Client from '../lib';
+import { labels } from '../lib/configs';
 
 const client = new Client();
+const initialOptions = {};
+Object.keys(labels).forEach((key) => {
+  initialOptions[key] = false;
+});
 
 function Main() {
   const { token: authToken, isAuthenticated, doSignIn, doSignOut } = useAuth();
@@ -47,8 +53,23 @@ function Main() {
       )
       .then(() => setIsLoading(false));
   };
+
+  const [optionState, setOptionState] = React.useState(initialOptions);
+  const options = Object.keys(labels).map((key) => ({
+    key,
+    label: labels[key],
+    value: optionState[key],
+    setValue: (value) => {
+      setOptionState((prevState) => ({
+        ...prevState,
+        [key]: value
+      }));
+    }
+  }));
+
   const handleSort = () => {
     setIsLoading(true);
+    client.updateUrlPatterns(optionState);
     client
       .getSorted(input)
       .then(
@@ -83,14 +104,22 @@ function Main() {
       />
       <Box component="main" m={2}>
         <Toolbar />
-        <Box my={2}>
-          <SearchBar
-            value={repoLink}
-            onValueChange={(e) => setRepoLink(e.target.value)}
-            onImport={handleImport}
-            onSort={handleSort}
-          />
-        </Box>
+
+        {/* Search bar and options */}
+        <Grid container spacing={2} mt={1}>
+          <Grid item xs={12} lg={6} alignSelf="center">
+            <SearchBar
+              value={repoLink}
+              onValueChange={(e) => setRepoLink(e.target.value)}
+              onImport={handleImport}
+            />
+          </Grid>
+          <Grid item xs={12} lg={6} alignSelf="center">
+            <SortOptions options={options} onSort={handleSort} />
+          </Grid>
+        </Grid>
+
+        {/* Editor */}
         <Grid container spacing={2} mt={1} mb={3}>
           <Grid item xs={12} lg={6}>
             <EditorPreview name="Input" code={input} onCodeChange={setInput} />

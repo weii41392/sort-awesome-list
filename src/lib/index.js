@@ -1,12 +1,21 @@
 import { patterns } from './constants';
 import { fetchReadme } from './api';
 import { parse, stringify } from './markdown';
+import { mergeObject, filterFalsy } from './utils';
+import { defaults as defaultConfigs, makeConfigs } from './configs';
 import markAndSort from './core';
-import makeConfigs from './configs';
 
 class Client {
   constructor(configs) {
     this.configs = makeConfigs(configs);
+  }
+
+  updateUrlPatterns(urlPatterns) {
+    const innerUrlPatterns = mergeObject(
+      defaultConfigs.urlPatterns,
+      urlPatterns
+    );
+    this.configs.urlPatterns = filterFalsy(innerUrlPatterns);
   }
 
   updateToken(token) {
