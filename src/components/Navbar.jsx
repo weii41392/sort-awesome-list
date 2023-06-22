@@ -1,27 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import GitHubButton from 'react-github-btn';
 import GitHubIcon from './GitHubIcon';
 
 function Navbar({ isAuthenticated, onLoginLogout }) {
   return (
     <AppBar component="nav" color="dark">
       <Toolbar>
-        <Box flexGrow={1}>
-          <Link
-            variant="h6"
-            color="inherit"
-            underline="hover"
-            href="https://github.com/weii41392/sort-awesome-list"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+        <Box display="flex" flexGrow={1} flexDirection="row">
+          <Typography variant="h6" color="inherit">
             sort-awesome-list
-          </Link>
+          </Typography>
+          <Box sx={{ alignSelf: 'end', mx: 1 }}>
+            <GitHubButton
+              href="https://github.com/weii41392/sort-awesome-list"
+              aria-label="Star weii41392/sort-awesome-list on GitHub"
+            >
+              Star
+            </GitHubButton>
+          </Box>
         </Box>
         <Button color="neutral" variant="contained" onClick={onLoginLogout}>
           <GitHubIcon />
