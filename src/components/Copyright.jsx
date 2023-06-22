@@ -11,7 +11,7 @@ export default function Copyright() {
         underline="hover"
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.wjhuang.ml/"
+        href="https://weii41392.github.io/"
       >
         Wei-Jie Huang
       </Link>

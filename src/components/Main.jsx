@@ -17,7 +17,7 @@ import { labels } from '../lib/configs';
 const client = new Client();
 const initialOptions = {};
 Object.keys(labels).forEach((key) => {
-  initialOptions[key] = false;
+  initialOptions[key] = true;
 });
 
 function Main() {
@@ -120,7 +120,7 @@ function Main() {
         </Grid>
 
         {/* Editor */}
-        <Grid container spacing={2} mt={1} mb={3}>
+        <Grid container spacing={2} px={2} mt={1} mb={3}>
           <Grid item xs={12} lg={6}>
             <EditorPreview name="Input" code={input} onCodeChange={setInput} />
           </Grid>

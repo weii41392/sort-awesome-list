@@ -36,7 +36,7 @@ function SortOptions({ options, onSort }) {
       alignItems="center"
       gap={1}
     >
-      <Box display="flex" flexWrap="wrap" width="40%">
+      <Box display="flex" flexWrap="wrap" mx={1}>
         {options.map((option) => (
           <Option
             key={option.key}
